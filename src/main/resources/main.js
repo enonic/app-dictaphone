@@ -2,7 +2,7 @@ var mustacheLib = require('/lib/xp/mustache');
 var router = require('/lib/router')();
 var helper = require('/lib/helper');
 var swController = require('/lib/pwa/sw-controller');
-var siteTitle = 'PWA Starter';
+var siteTitle = 'Enonic Dictaphone';
 
 var renderPage = function(pageName) {
     return function() {
@@ -26,10 +26,6 @@ var renderPage = function(pageName) {
 };
 
 router.get('/', renderPage('main.html'));
-
-router.get('/about', renderPage('about.html'));
-
-router.get('/contact', renderPage('contact.html'));
 
 router.get('/sw.js', swController.get);
 

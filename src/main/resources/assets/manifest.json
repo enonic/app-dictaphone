@@ -1,6 +1,6 @@
 {
-  "name": "PWA Starter for Enonic XP",
-  "short_name": "PWA Starter",
+  "name": "Enonic Dictaphone",
+  "short_name": "Dictaphone",
   "theme_color": "#FFF",
   "background_color": "#FFF",
   "display": "standalone",

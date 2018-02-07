@@ -20,13 +20,3 @@ workboxSW.precache([
 workboxSW.router.setDefaultHandler({
     handler: workboxSW.strategies.cacheFirst()
 });
-
-workboxSW.router.registerRoute(
-    '{{baseUrl}}/about',
-    workboxSW.strategies.networkFirst()
-);
-
-workboxSW.router.registerRoute(
-    '{{baseUrl}}/contact',
-    workboxSW.strategies.networkFirst()
-);
