@@ -18,6 +18,7 @@ module.exports = {
 
     output: {
         path: buildAssetsPath,
+
         filename: 'precache/bundle.js'
     },
 
@@ -31,8 +32,21 @@ module.exports = {
                 test: /.less$/,
                 loader: extractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: "css-loader!less-loader"
+                    use: "css-loader!less-loader",
+                    publicPath: '../'
                 })
+            },
+            {
+                test: /\.svg$/,
+                loader: 'file-loader?name=precache/icons/[name].[ext]'
+            },
+            {
+                test: /\.woff$/,
+                loader: 'file-loader?name=precache/fonts/[name].[ext]'
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: 'file-loader?name=precache/icons/[name].[ext]'
             }
         ]
     },

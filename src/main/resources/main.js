@@ -12,7 +12,7 @@ var renderPage = function(pageName) {
                 version: app.version,
                 baseUrl: helper.getBaseUrl(),
                 precacheUrl: helper.getBaseUrl() + '/precache',
-                themeColor: '#FFF',
+                themeColor: '#4527A0',
                 styles: mustacheLib.render(resolve('/pages/styles.html')),
                 serviceWorker: mustacheLib.render(resolve('/pages/sw.html'), {
                     title: siteTitle,

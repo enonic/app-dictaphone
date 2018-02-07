@@ -1,4 +1,5 @@
-require('../css/styles.less');
+// require('../css/styles.less');
+require('../css/voicememo-core.less');
 
 (function(){
     window.onload = function() {
