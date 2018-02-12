@@ -32,7 +32,7 @@
         Toggle nav menu
     </button>
 
-    <h1 class="header__title">Voice Memos</h1>
+    <h1 class="header__title">Enonic Dictaphone</h1>
 </header>
 
 <main class="main js-main">
@@ -73,7 +73,7 @@
             <path d="M131 41.172c-3-1.192-38.782-14.307-42-15-3.832-1.952-6.283.028-7 1-13.99 22.477-39.723 63.508-47 75-1.248 2.1-1.42 3.397 0 4 1.432 1.03 44.33 20.627 47 22 2.094.805 2.995-.968 4-3 7.79-12.958 33.203-56.04 47.636-79.21.38-1.212.364-3.6-2.636-4.79z"
                   fill="url(#c)" mask="url(#b)"/>
             <path d="M85.04 29.6l43.206 16.02-45.69 76.532-43.27-19.296L85.038 29.6z" fill="#FFF" mask="url(#b)"/>
-            <path d="M85.013 29.038l-6.595 10.438 44.225 16.448 6.22-10.613-43.85-16.27z" fill="#673AB7"
+            <path d="M85.013 29.038l-6.595 10.438 44.225 16.448 6.22-10.613-43.85-16.27z" fill="#3f51b5"
                   mask="url(#b)"/>
             <path d="M85.16 29.17l-2.815 3.87 44.078 16.314 2.44-4.043L85.16 29.17z" fill="#4527A0" mask="url(#b)"/>
             <path d="M65.72 69.8l2.7.064 7.442-10.12-5.997 11.873 3.548-4.266-1.48 5.3 12.734-18.17-10.35 18.7 9.718-10.59-5.845 11.64 5.55-6.34-2.165 7.22 3.34 1.72 6.16-4.252-1.917 5.574 2.94 1.295 11.034-14.27-8.04 14.67 5.962 2.504-1.15 1.73-5.586-2.98-8.764 12.39 6.022-12.994-2.974-1.37-3.972 3.217-.016-4.665-3.682-1.53-4.936 5.29 1.578-6.063-6.94 10.32L73.85 73.9 61.82 92.93l9.44-19.37-5.54 5.555 3.41-6.557-7.62 10.46L67.256 71.6l-1.536-1.8z"
@@ -97,7 +97,7 @@
 
 <section class="hidden record-view js-record-view">
     <div class="record-view__panel">
-        <div class="record-view__panel-title">Record a new memo</div>
+        <div class="record-view__panel-title js-record-panel-title">Record a new memo</div>
         <div class="record-view__panel-mic">
             <canvas class="record-view__volume-readout js-volume-readout"></canvas>
         </div>
@@ -105,9 +105,7 @@
         <button tabindex="-1" class="record-view__record-start-btn js-record-start-btn">Record</button>
         <button tabindex="-1" class="record-view__record-stop-btn js-record-stop-btn" disabled>Stop recording</button>
 
-        <p class="record-view__warning">Please note: 1 minute of recording takes up ~10MB disk space. <a
-                class="record-view__warning-link" target="_blank" href="https://aerotwist.com/blog/voice-memos/#codecs">Read
-            why</a>.</p>
+        <p class="record-view__warning">Please note: 1 minute of recording takes up ~10MB disk space.</p>
 
         <button tabindex="-1" class="record-view__record-cancel-btn js-record-cancel-btn">Cancel</button>
 
@@ -180,15 +178,11 @@
     <div class="side-nav__content js-side-nav-content">
 
         <div class="side-nav__header">
-            <h1 class="side-nav__title">Voice Memos</h1>
+            <h1 class="side-nav__title">Enonic Dictaphone</h1>
         </div>
 
         <div class="side-nav__body">
-            <button tabindex="-1" class='side-nav__delete-memos js-delete-memos'>Delete all memos</button>
-            <a tabindex="-1" target="_blank" href="https://aerotwist.com/blog/voice-memos/" class='side-nav__blog-post'>See
-                the blog post</a>
-            <a tabindex="-1" target="_blank" href="https://github.com/GoogleChrome/voice-memos/issues"
-               class='side-nav__file-bug-report'>File a bug report</a>
+            <button tabindex="-1" class='side-nav__delete-memos js-delete-memos'>Delete all records</button>
         </div>
 
         <div class="side-nav__version">Version @VERSION@</div>
@@ -224,7 +218,7 @@
         <style>
             #spinner {
                 box-sizing: border-box;
-                stroke: #673AB7;
+                stroke: #3f51b5;
                 stroke-width: 3px;
                 transform-origin: 50%;
 
@@ -267,6 +261,11 @@
 {{{serviceWorker}}}
 
 </body>
+
+<script>
+    appUrl = '{{appUrl}}';
+</script>
+>
 
 
 </html>

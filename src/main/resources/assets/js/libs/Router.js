@@ -43,7 +43,7 @@ class Router {
         // Assume the first part of the path is the
         // verb we want to action, with the rest of the path
         // being the data to pass to the handler.
-        var pathParts = path.split('/');
+        var pathParts = (path).split('/');
         var action = pathParts.shift();
 
         if (this.routes[action])
@@ -76,7 +76,7 @@ class Router {
 
     manageState() {
 
-        var path = document.location.pathname.replace(/^\//, '');
+        var path = document.location.pathname.replace(appUrl, '').replace(/^\/*/, '');
 
         // Assume the first part of the path is the
         // verb we want to action, with the rest of the path
@@ -141,7 +141,7 @@ class Router {
         if (path === window.location.pathname)
             return;
 
-        history.pushState(undefined, "", path);
+        history.pushState(undefined, "", appUrl + path);
         requestAnimationFrame(() => {
             this.manageState();
         });

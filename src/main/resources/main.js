@@ -10,6 +10,7 @@ var renderPage = function(pageName) {
             body: mustacheLib.render(resolve('pages/' + pageName), {
                 title: siteTitle,
                 version: app.version,
+                appUrl: helper.getAppUrl(),
                 baseUrl: helper.getBaseUrl(),
                 precacheUrl: helper.getBaseUrl() + '/precache',
                 themeColor: '#4527A0',
