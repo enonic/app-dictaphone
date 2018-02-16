@@ -51,4 +51,16 @@ export default class MemoModel extends Model {
         return 'MemoModel';
     }
 
+    toJson() {
+        return JSON.stringify({
+            title: this.title,
+            description: this.description,
+            url: this.url,
+            audio: this.audio,
+            volumeData: this.volumeData,
+            time: this.time,
+            transcript: this.transcript
+        });
+    }
+
 }

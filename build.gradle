@@ -24,6 +24,10 @@ dependencies {
     include "com.enonic.xp:lib-mustache:${xpVersion}"
     include "com.enonic.xp:lib-io:${xpVersion}"
     include "com.enonic.lib:lib-router:1.0.1"
+    include "com.enonic.xp:lib-node:${xpVersion}"
+    include "com.enonic.xp:lib-value:${xpVersion}"
+    include "com.enonic.xp:lib-repo:${xpVersion}"
+    include "com.enonic.xp:lib-auth:${xpVersion}"
 }
 
 repositories {

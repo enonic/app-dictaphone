@@ -15,19 +15,19 @@
  *
  */
 
-import ConfigManagerInstance from './ConfigManager';
+import ConfigManagerInstance from '../ConfigManager';
 
-export default function DatabaseInstance() {
+export default function IndexedDBInstance() {
 
-    if (typeof window.DatabaseInstance_ !== 'undefined')
-        return Promise.resolve(window.DatabaseInstance_);
+    if (typeof window.IndexedDBInstance_ !== 'undefined')
+        return Promise.resolve(window.IndexedDBInstance_);
 
-    window.DatabaseInstance_ = new Database();
+    window.IndexedDBInstance_ = new OfflineDatabase();
 
-    return Promise.resolve(window.DatabaseInstance_);
+    return Promise.resolve(window.IndexedDBInstance_);
 }
 
-class Database {
+class OfflineDatabase {
 
     constructor() {
 

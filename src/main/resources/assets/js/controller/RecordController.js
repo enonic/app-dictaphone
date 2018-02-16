@@ -175,7 +175,7 @@ export default class RecordController extends Controller {
             });
 
             // Now show the form...
-            newMemo.put().then(() => {
+            MemoModel.put(newMemo).then(() => {
 
                 PubSubInstance().then(ps => {
                     ps.pub(MemoModel.UPDATED);
@@ -183,9 +183,10 @@ export default class RecordController extends Controller {
 
                 // By rights we should show the user something that lets
                 // them edit the title, description, etc.
-                RouterInstance().then(router => {
+                setTimeout(() => RouterInstance().then(router => {
                     router.go(`/edit/${newMemo.url}`);
-                });
+                }), 200);
+
             });
         }, err => {
 

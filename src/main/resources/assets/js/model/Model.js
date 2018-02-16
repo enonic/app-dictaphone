@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import DatabaseInstance from '../libs/Database';
+import IndexedDBInstance from '../libs/db/IndexedDB';
 import ConfigManagerInstance from '../libs/ConfigManager';
+import RepoDBInstance from "../libs/db/RepoDB";
 
 export default class Model {
 
@@ -40,8 +41,12 @@ export default class Model {
         return 'Model';
     }
 
+    static isOnline() {
+        return navigator.onLine;
+    }
+
     static nuke() {
-        return DatabaseInstance()
+        return IndexedDBInstance()
             .then(db => db.close())
             .then(db => db.nuke());
     }
@@ -51,12 +56,13 @@ export default class Model {
         if (this instanceof Model)
             Promise.reject("Can't call get on Model directly. Inherit first.");
 
-        return DatabaseInstance()
+        const dbInstance = !this.isOnline() ?
+            IndexedDBInstance() : RepoDBInstance();
 
         // Do the query.
-            .then(db => db.get(this.storeName, key))
+        return dbInstance.then(db => db.get(this.storeName, key))
 
-            // Wrap the result in the correct class.
+        // Wrap the result in the correct class.
             .then(result => {
 
                 return ConfigManagerInstance().then(configManager => {
@@ -77,8 +83,7 @@ export default class Model {
 
                 });
 
-            });
-
+            })
     }
 
     /**
@@ -89,12 +94,13 @@ export default class Model {
         if (this instanceof Model)
             Promise.reject("Can't call getAll on Model directly. Inherit first.");
 
-        return DatabaseInstance()
+        const dbInstance = !this.isOnline() ?
+            IndexedDBInstance() : RepoDBInstance();
 
         // Do the query.
-            .then(db => db.getAll(this.storeName, index, order))
+        return dbInstance.then(db => db.getAll(this.storeName, index, order))
 
-            // Wrap all the results in the correct class.
+        // Wrap all the results in the correct class.
             .then(results => {
 
                 return ConfigManagerInstance().then(configManager => {
@@ -118,13 +124,13 @@ export default class Model {
 
                 });
 
-            });
+            })
 
     }
 
-    put() {
-        return this.constructor.put(this);
-    }
+    /* put() {
+         return this.constructor.put(this);
+     }*/
 
     /**
      * Either inserts or update depending on whether the key / keyPath is set.
@@ -138,10 +144,11 @@ export default class Model {
         if (this instanceof Model)
             Promise.reject("Can't call put on Model directly. Inherit first.");
 
-        return DatabaseInstance()
+        const dbInstance = !this.isOnline() ?
+            IndexedDBInstance() : RepoDBInstance();
 
         // Do the query.
-            .then(db => db.put(this.storeName, value, value.key))
+        return dbInstance.then(db => db.put(this.storeName, value, value.key))
 
             .then(key => {
 
@@ -162,7 +169,7 @@ export default class Model {
 
                 })
 
-            });
+            })
 
     }
 
@@ -171,9 +178,10 @@ export default class Model {
         if (this instanceof Model)
             Promise.reject("Can't call deleteAll on Model directly. Inherit first.");
 
-        return DatabaseInstance()
+        const dbInstance = !this.isOnline() ?
+            IndexedDBInstance() : RepoDBInstance();
 
-            .then(db => db.deleteAll(this.storeName))
+        return dbInstance.then(db => db.deleteAll(this.storeName))
 
             .catch(e => {
                 // It may be that the store doesn't exist yet, so relax for that one.
@@ -207,9 +215,10 @@ export default class Model {
                     value = value.key;
             }
 
-            return DatabaseInstance()
+            const dbInstance = !this.isOnline() ?
+                IndexedDBInstance() : RepoDBInstance();
 
-                .then(db => db.delete(this.storeName, value));
+            return dbInstance.then(db => db.delete(this.storeName, value));
 
         });
     }

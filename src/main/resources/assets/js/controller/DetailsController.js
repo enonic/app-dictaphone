@@ -127,7 +127,6 @@ export default class DetailsController extends Controller {
             // Locate the source element
             this.memoId = id;
 
-            debugger;
             var source = document.querySelector('#vm-' + id);
 
             this.reveal.classList.add('details-view__box-reveal--visible');
@@ -240,7 +239,7 @@ export default class DetailsController extends Controller {
         requestAnimationFrame(() => {
 
             var id = this.memoId;
-            debugger;
+
             var source = document.querySelector('#vm-' + id);
             var revealBB = this.reveal.getBoundingClientRect();
             var listItems = document.querySelectorAll('.list-view__item');

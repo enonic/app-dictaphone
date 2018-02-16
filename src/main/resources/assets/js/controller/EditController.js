@@ -273,7 +273,7 @@ export default class EditController extends Controller {
         if (this.memo.title.trim() === '')
             this.memo.title = 'Untitled Memo';
 
-        this.memo.put().then(() => {
+        MemoModel.put(this.memo).then(() => {
 
             PubSubInstance().then(ps => {
                 ps.pub(MemoModel.UPDATED);

@@ -2,6 +2,7 @@ var mustacheLib = require('/lib/xp/mustache');
 var router = require('/lib/router')();
 var helper = require('/lib/helper');
 var swController = require('/lib/pwa/sw-controller');
+var controller = require('/lib/repo/controller.js');
 var siteTitle = 'Enonic Dictaphone';
 
 var renderPage = function(pageName) {
@@ -27,9 +28,21 @@ var renderPage = function(pageName) {
 };
 
 router.get('/', renderPage('main.html'));
+router.get('/create', renderPage('main.html'));
+router.get('/edit/{id}', renderPage('main.html'));
+router.get('/details/{id}', renderPage('main.html'));
 
 router.get('/sw.js', swController.get);
 
-exports.get = function (req) {
+router.post('/put', controller.put);
+
+router.get('/get', controller.get);
+router.get('/getAll', controller.getAll);
+router.get('/getAudio', controller.getAudio);
+
+router.get('/delete', controller.delete);
+router.get('/deleteAll', controller.deleteAll);
+
+exports.all = function (req) {
     return router.dispatch(req);
 };

@@ -16,7 +16,6 @@
  */
 
 import Controller from './Controller';
-import AppModel from '../model/AppModel';
 import MemoModel from '../model/MemoModel';
 import RouterInstance from '../libs/Router';
 import PubSubInstance from '../libs/PubSub';
@@ -35,7 +34,7 @@ export default class AppController extends Controller {
 
         super();
 
-        this.appModel = null;
+        // this.appModel = null;
         this.sideNavToggleButton = document.querySelector('.js-toggle-menu');
         this.sideNav = document.querySelector('.js-side-nav');
         this.sideNavContent = this.sideNav.querySelector('.js-side-nav-content');
@@ -44,7 +43,7 @@ export default class AppController extends Controller {
         this.deleteMemos = this.sideNav.querySelector('.js-delete-memos');
         this.deleteMemos.addEventListener('click', this.deleteAllMemos);
 
-        AppModel.get(1).then(appModel => {
+        // AppModel.get(1).then(appModel => {
 
             RouterInstance().then(router => {
                 router.add('_root',
@@ -52,12 +51,12 @@ export default class AppController extends Controller {
                     () => this.hide());
             });
 
-            this.appModel = appModel;
+        // this.appModel = appModel;
 
-            if (appModel === undefined) {
-                this.appModel = new AppModel();
-                this.appModel.put();
-            }
+        //  if (appModel === undefined) {
+        //      this.appModel = new AppModel();
+        //     this.appModel.put();
+        //    }
 
             /* if (this.appModel.firstRun) {
                // Show welcome screen
@@ -176,7 +175,7 @@ export default class AppController extends Controller {
             //     console.log(err);
             //   });
             // }
-        });
+        // });
     }
 
     supportsGUMandWebAudio() {
@@ -260,7 +259,7 @@ export default class AppController extends Controller {
 
             })
             .then(() => {
-                AppModel.nuke();
+                //       AppModel.nuke();
                 window.location = '/';
             })
             .catch(() => {
