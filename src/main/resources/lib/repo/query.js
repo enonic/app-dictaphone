@@ -73,8 +73,6 @@ exports.put = function (params) {
 
     var result;
 
-    log.info(memoNode);
-
     if (memoNode) {
         result = repo.modify({
             key: memoNode._id,

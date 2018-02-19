@@ -9,3 +9,21 @@ import AppController from './controller/AppController';
 
 new AppController();
 
+window.onload = function () {
+
+    const toggleOnlineStatus = function () {
+        if (navigator.onLine) {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(function (registration) {
+                    registration.sync.register('dbSync');
+                });
+            }
+        }
+    };
+
+    toggleOnlineStatus();
+
+    window.addEventListener("offline", toggleOnlineStatus);
+    window.addEventListener("online", toggleOnlineStatus);
+};
+

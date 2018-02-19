@@ -16,6 +16,9 @@
  */
 
 import Model from './Model';
+import LogModel from "./LogModel";
+import RepoDBInstance from "../libs/db/RepoDB";
+import IndexedDBInstance from "../libs/db/IndexedDB";
 
 export default class MemoModel extends Model {
 
@@ -29,6 +32,7 @@ export default class MemoModel extends Model {
         this.audio = data.audio || null;
         this.volumeData = data.volumeData || null;
         this.time = data.time || Date.now();
+        this.modifiedTime = data.time || null;
         this.transcript = data.transcript || null;
     }
 
@@ -51,6 +55,27 @@ export default class MemoModel extends Model {
         return 'MemoModel';
     }
 
+    static getDBInstance() {
+        return !this.isOnline() ?
+            IndexedDBInstance() : RepoDBInstance();
+    }
+
+    static put(value) {
+        return super.put(value).then((memo) => {
+            if (!this.isOnline())
+                new LogModel({memoKey: memo.url, type: memo.modifiedTime ? "U" : "C"}, this.makeURL()).put();
+            return memo;
+        })
+    }
+
+    static delete(value) {
+        return super.delete(value).then((event) => {
+            if (!this.isOnline())
+                new LogModel({memoKey: value, type: "D"}, this.makeURL()).put();
+            return event;
+        })
+    }
+
     toJson() {
         return JSON.stringify({
             title: this.title,
@@ -59,6 +84,7 @@ export default class MemoModel extends Model {
             audio: this.audio,
             volumeData: this.volumeData,
             time: this.time,
+            modifiedTime: this.modifiedTime,
             transcript: this.transcript
         });
     }

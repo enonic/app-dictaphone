@@ -15,32 +15,27 @@
  * limitations under the License.
  */
 
-const Config = {
-    name: 'voicememo',
-    version: 1,
-    stores: {
-        'MemoModel': {
-            properties: {
-                autoIncrement: true,
-                keyPath: 'url'
-            },
-            indexes: {
-                time: {unique: true}
-            }
-        },
-        'AppModel': {
-            deleteOnUpgrade: true,
-            properties: {
-                autoIncrement: true
-            }
-        },
-        'LogModel': {
-            deleteOnUpgrade: true,
-            properties: {
-                autoIncrement: true
-            }
-        }
-    }
-};
+import Model from './Model';
 
-export default Config;
+
+export default class LogModel extends Model {
+
+    //   OPERATION_TYPES = ['CREATE', 'UPDATE', 'DELETE'];
+
+    constructor(data, key) {
+
+        super(key);
+
+        this.type = data.type;
+        this.time = data.time || Date.now();
+        this.memoKey = data.memoKey;
+    }
+
+    static get UPDATED() {
+        return 'LogModel-updated';
+    }
+
+    static get storeName() {
+        return 'LogModel';
+    }
+}

@@ -6,6 +6,11 @@ const workboxSW = new self.WorkboxSW({
     clientsClaim: true
 });
 
+self.addEventListener('sync', function (event) {
+    if (event.tag == 'dbSync') {
+        // this.pushOfflineMemos();
+    }
+});
 // This is a placeholder for manifest dynamically injected from webpack.config.js
 workboxSW.precache([]);
 

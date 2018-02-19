@@ -270,6 +270,8 @@ export default class EditController extends Controller {
         this.memo.title = this.formTitle.value;
         this.memo.description = this.formDescription.textContent;
 
+        this.memo.modifiedTime = Date.now();
+
         if (this.memo.title.trim() === '')
             this.memo.title = 'Untitled Memo';
 

@@ -89,7 +89,6 @@ class OnlineDatabase {
                 if (xhr.readyState != 4) return;
 
                 if (xhr.status == 200) {
-                    debugger;
                     resolve(xhr.responseText);
                 } else {
                     reject(xhr.responseText);

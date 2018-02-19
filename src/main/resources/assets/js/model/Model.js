@@ -17,7 +17,6 @@
 
 import IndexedDBInstance from '../libs/db/IndexedDB';
 import ConfigManagerInstance from '../libs/ConfigManager';
-import RepoDBInstance from "../libs/db/RepoDB";
 
 export default class Model {
 
@@ -51,13 +50,16 @@ export default class Model {
             .then(db => db.nuke());
     }
 
+    static getDBInstance() {
+        return IndexedDBInstance();
+    }
+
     static get(key) {
 
         if (this instanceof Model)
             Promise.reject("Can't call get on Model directly. Inherit first.");
 
-        const dbInstance = !this.isOnline() ?
-            IndexedDBInstance() : RepoDBInstance();
+        const dbInstance = this.getDBInstance();
 
         // Do the query.
         return dbInstance.then(db => db.get(this.storeName, key))
@@ -94,8 +96,7 @@ export default class Model {
         if (this instanceof Model)
             Promise.reject("Can't call getAll on Model directly. Inherit first.");
 
-        const dbInstance = !this.isOnline() ?
-            IndexedDBInstance() : RepoDBInstance();
+        const dbInstance = this.getDBInstance();
 
         // Do the query.
         return dbInstance.then(db => db.getAll(this.storeName, index, order))
@@ -128,9 +129,9 @@ export default class Model {
 
     }
 
-    /* put() {
+    put() {
          return this.constructor.put(this);
-     }*/
+    }
 
     /**
      * Either inserts or update depending on whether the key / keyPath is set.
@@ -144,8 +145,7 @@ export default class Model {
         if (this instanceof Model)
             Promise.reject("Can't call put on Model directly. Inherit first.");
 
-        const dbInstance = !this.isOnline() ?
-            IndexedDBInstance() : RepoDBInstance();
+        const dbInstance = this.getDBInstance();
 
         // Do the query.
         return dbInstance.then(db => db.put(this.storeName, value, value.key))
@@ -178,8 +178,7 @@ export default class Model {
         if (this instanceof Model)
             Promise.reject("Can't call deleteAll on Model directly. Inherit first.");
 
-        const dbInstance = !this.isOnline() ?
-            IndexedDBInstance() : RepoDBInstance();
+        const dbInstance = this.getDBInstance();
 
         return dbInstance.then(db => db.deleteAll(this.storeName))
 
@@ -215,8 +214,7 @@ export default class Model {
                     value = value.key;
             }
 
-            const dbInstance = !this.isOnline() ?
-                IndexedDBInstance() : RepoDBInstance();
+            const dbInstance = this.getDBInstance();
 
             return dbInstance.then(db => db.delete(this.storeName, value));
 
