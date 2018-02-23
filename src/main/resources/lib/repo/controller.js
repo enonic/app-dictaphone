@@ -27,9 +27,12 @@ exports.get = function (req) {
     };
 };
 
-exports.getAll = function () {
+exports.getAll = function (req) {
+    var order = req.params.order == 'next' ? 'ASC' : 'DESC';
+
     var result = query.query({
         start: 0,
+        sort: '_timestamp ' + order,
     });
 
     return {

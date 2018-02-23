@@ -1,12 +1,13 @@
 var nodeLib = require('/lib/xp/node');
 var repoLib = require('/lib/xp/repo');
 var authLib = require('/lib/xp/auth');
+var contextLib = require('/lib/xp/context');
 
 var REPO_NAME = 'memo-repo';
 
 var ROOT_PERMISSIONS = [
     {
-        "principal": "role:system.authenticated",
+        "principal": "role:system.everyone",
         "allow": [
             "READ",
             "CREATE",
@@ -17,20 +18,12 @@ var ROOT_PERMISSIONS = [
             "WRITE_PERMISSIONS"
         ],
         "deny": []
-    },
-    {
-        "principal": "role:system.everyone",
-        "allow": ["READ"],
-        "deny": []
     }
 ];
 
-exports.newConnection = function newConnection() {
-    if (!repoLib.get(REPO_NAME)) {
-        createRepo();
-    }
+exports.ROOT_PERMISSIONS = ROOT_PERMISSIONS;
 
-    checkUserFolder();
+exports.newConnection = function newConnection() {
 
     return nodeLib.connect({
         repoId: REPO_NAME,
@@ -38,26 +31,37 @@ exports.newConnection = function newConnection() {
     });
 };
 
+exports.initialize = function () {
+    log.info('Initializing Dictaphone repository...');
 
-var newAdminConnection = function () {
-    if (!repoLib.get(REPO_NAME)) {
+    contextLib.run({
+        user: {
+            login: 'su',
+            userStore: 'system'
+        },
+        principals: ["role:system.admin"]
+    }, doInitialize);
+
+
+    log.info('Dictaphone repository initialized.');
+}
+
+var doInitialize = function () {
+    var result = repoLib.get(REPO_NAME);
+
+    if (!result) {
         createRepo();
     }
 
     checkUserFolder();
-
-    return nodeLib.connect({
-        repoId: REPO_NAME,
-        branch: 'master',
-        principals: ["role:system.admin"]
-    });
 };
 
 var createRepo = function () {
     log.info('Creating repository...');
     var newRepo = repoLib.create({
         id: REPO_NAME,
-        rootPermissions: ROOT_PERMISSIONS
+        rootPermissions: ROOT_PERMISSIONS,
+        principals: ["role:system.admin"]
     });
     log.info('Repository created.');
 
@@ -91,6 +95,7 @@ var getCurrentFolderPath = function () {
 }
 
 var getCurrentUserKey = function () {
-    var user = authLib.getUser();
-    return user ? user.key : null;
+    return 'memos';
+    // var user = authLib.getUser();
+    // return user ? user.key : null;
 };

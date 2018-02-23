@@ -44,22 +44,30 @@ export default class Model {
         return navigator.onLine;
     }
 
-    static nuke() {
+    static nukeLocal() {
         return IndexedDBInstance()
             .then(db => db.close())
             .then(db => db.nuke());
     }
 
-    static getDBInstance() {
+    static getIndexedDBInstance() {
         return IndexedDBInstance();
     }
 
-    static get(key) {
+    static getRepoDBInstance() {
+        return RepoDBInstance();
+    }
+
+    static getDefaultDBInstance() {
+        return IndexedDBInstance();
+    }
+
+    static get(key, dbInstance) {
 
         if (this instanceof Model)
             Promise.reject("Can't call get on Model directly. Inherit first.");
 
-        const dbInstance = this.getDBInstance();
+        dbInstance = dbInstance || this.getDefaultDBInstance();
 
         // Do the query.
         return dbInstance.then(db => db.get(this.storeName, key))
@@ -91,12 +99,12 @@ export default class Model {
     /**
      * Gets all the objects from the database.
      */
-    static getAll(index, order) {
+    static getAll(index, order, dbInstance) {
 
         if (this instanceof Model)
             Promise.reject("Can't call getAll on Model directly. Inherit first.");
 
-        const dbInstance = this.getDBInstance();
+        dbInstance = dbInstance || this.getDefaultDBInstance();
 
         // Do the query.
         return dbInstance.then(db => db.getAll(this.storeName, index, order))
@@ -129,8 +137,8 @@ export default class Model {
 
     }
 
-    put() {
-         return this.constructor.put(this);
+    put(dbInstance) {
+        return this.constructor.put(this, dbInstance);
     }
 
     /**
@@ -140,12 +148,12 @@ export default class Model {
      * is null, then the object is inserted. If the keypath is not set and the
      * value's key is set then the object is updated.
      */
-    static put(value) {
+    static put(value, dbInstance) {
 
         if (this instanceof Model)
             Promise.reject("Can't call put on Model directly. Inherit first.");
 
-        const dbInstance = this.getDBInstance();
+        dbInstance = dbInstance || this.getDefaultDBInstance();
 
         // Do the query.
         return dbInstance.then(db => db.put(this.storeName, value, value.key))
@@ -173,12 +181,12 @@ export default class Model {
 
     }
 
-    static deleteAll() {
+    static deleteAll(dbInstance) {
 
         if (this instanceof Model)
             Promise.reject("Can't call deleteAll on Model directly. Inherit first.");
 
-        const dbInstance = this.getDBInstance();
+        dbInstance = dbInstance || this.getDefaultDBInstance();
 
         return dbInstance.then(db => db.deleteAll(this.storeName))
 
@@ -190,11 +198,11 @@ export default class Model {
 
     }
 
-    delete() {
-        return this.constructor.delete(this);
+    delete(dbInstance) {
+        return this.constructor.delete(this, dbInstance);
     }
 
-    static delete(value) {
+    static delete(value, dbInstance) {
 
         if (this instanceof Model)
             Promise.reject("Can't call delete on Model directly. Inherit first.");
@@ -214,7 +222,7 @@ export default class Model {
                     value = value.key;
             }
 
-            const dbInstance = this.getDBInstance();
+            dbInstance = dbInstance || this.getDefaultDBInstance();
 
             return dbInstance.then(db => db.delete(this.storeName, value));
 

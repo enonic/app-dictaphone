@@ -70,10 +70,6 @@ export default class RecordController extends Controller {
             });
         });
 
-        /*this.loadScript('precache/third_party/Recorderjs/recorder.js')
-        /!* this.loadCSS('/styles/voicememo-record.css')*!/
-            .then(() => {*/
-
         this.view.classList.remove('hidden');
 
         RouterInstance().then(router => {
@@ -185,7 +181,7 @@ export default class RecordController extends Controller {
                 // them edit the title, description, etc.
                 setTimeout(() => RouterInstance().then(router => {
                     router.go(`/edit/${newMemo.url}`);
-                }), 200);
+                }), 50);
 
             });
         }, err => {

@@ -3,6 +3,7 @@ var router = require('/lib/router')();
 var helper = require('/lib/helper');
 var swController = require('/lib/pwa/sw-controller');
 var controller = require('/lib/repo/controller.js');
+var connection = require('/lib/repo/connection.js');
 var siteTitle = 'Enonic Dictaphone';
 
 var renderPage = function(pageName) {
@@ -46,3 +47,5 @@ router.get('/deleteAll', controller.deleteAll);
 exports.all = function (req) {
     return router.dispatch(req);
 };
+
+connection.initialize();

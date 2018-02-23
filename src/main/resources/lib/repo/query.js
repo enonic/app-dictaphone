@@ -73,6 +73,8 @@ exports.put = function (params) {
 
     var result;
 
+    log.info('memoNode - ' + memoNode);
+
     if (memoNode) {
         result = repo.modify({
             key: memoNode._id,
@@ -80,19 +82,21 @@ exports.put = function (params) {
                 node.key = params.key;
                 node.value = params.value;
                 node.storeName = params.storeName;
-                //     node.audio = valueLib.binary('audio', params.stream);
                 return node;
             }
         });
     } else {
         result = repo.create({
             _parentPath: getCurrentFolderPath(),
+            _permissions: connection.ROOT_PERMISSIONS,
             key: params.key,
             value: params.value,
             storeName: params.storeName,
             audio: valueLib.binary('audio', params.stream)
         });
     }
+
+    repo.refresh('SEARCH');
 
     return result;
 }
@@ -111,6 +115,8 @@ exports.delete = function (key) {
 
         return result;
     }
+
+    repo.refresh('SEARCH');
 
     return null;
 }
@@ -131,6 +137,8 @@ exports.deleteAll = function () {
         });
     }
 
+    repo.refresh('SEARCH');
+
     return {count: count};
 }
 
@@ -139,12 +147,13 @@ var getKeyQuery = function (key) {
 }
 
 var getCurrentFolderPath = function () {
-    return '/' + getCurrentUserKey();
+    return '/' + getMemoFolderName();
 }
 
-var getCurrentUserKey = function () {
-    var user = authLib.getUser();
-    return user ? user.key : null;
+var getMemoFolderName = function () {
+    return 'memos';
+    // var user = authLib.getUser();
+    // return user ? user.key : null;
 };
 
 

@@ -63,8 +63,6 @@ export default class DetailsController extends Controller {
         this.playbackStarted = 0;
         this.renderPlaybackCanvasBound = this.renderPlaybackCanvas.bind(this);
 
-        // this.loadCSS('/styles/voicememo-details.css').then( () => {
-
         this.view.classList.remove('hidden');
 
         RouterInstance().then(router => {
@@ -81,8 +79,6 @@ export default class DetailsController extends Controller {
                 (data) => this.update(data));
 
         });
-
-        //  });
 
         // Set up event listeners to always be bound to the class.
         this.onAudioEndedBound = this.onAudioEnded.bind(this);
@@ -105,11 +101,15 @@ export default class DetailsController extends Controller {
     update(id) {
         this.releaseAudioURL();
         this.memoId = id;
-        this.populateDetails(id);
+        this.populateDetails(id).catch(e => {
+
+            RouterInstance().then(router => {
+                router.go('/');
+            });
+        });
     }
 
     show(id) {
-
         var viewport600px = window.matchMedia('(min-width: 600px)').matches;
         var viewport960px = window.matchMedia('(min-width: 960px)').matches;
         var cameFromEdit = document.querySelector('.edit-view__panel--visible');
@@ -164,7 +164,7 @@ export default class DetailsController extends Controller {
                     (sourceBB.height / revealBB.height)
                 ')';
             }
-
+        }).then(() => {
             // Sometimes we have to wait a while for changes to take hold, so let's
             // give the browser 5ms to do that then go on the next frame. No, I don't
             // think it's great, either.
@@ -217,7 +217,13 @@ export default class DetailsController extends Controller {
                 });
 
             }, 5);
-        });
+        }).catch(e => {
+
+            RouterInstance().then(router => {
+                router.go('/');
+            });
+        })
+
     }
 
     hide() {
@@ -437,11 +443,6 @@ export default class DetailsController extends Controller {
 
             this.panel.appendChild(this.audio);
 
-        }).catch(e => {
-
-            RouterInstance().then(router => {
-                router.go('/');
-            });
         })
     }
 

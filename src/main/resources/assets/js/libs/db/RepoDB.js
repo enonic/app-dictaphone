@@ -161,7 +161,7 @@ class OnlineDatabase {
 
             var xhr = new XMLHttpRequest();
 
-            xhr.open('GET', appUrl + '/getAll', true);
+            xhr.open('GET', appUrl + '/getAll?order=' + order, true);
             xhr.send();
 
             xhr.onreadystatechange = () => {

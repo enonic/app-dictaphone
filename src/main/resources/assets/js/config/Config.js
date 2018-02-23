@@ -38,6 +38,8 @@ const Config = {
             deleteOnUpgrade: true,
             properties: {
                 autoIncrement: true
+            }, indexes: {
+                time: {unique: true}
             }
         }
     }

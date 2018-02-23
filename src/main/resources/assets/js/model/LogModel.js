@@ -20,7 +20,11 @@ import Model from './Model';
 
 export default class LogModel extends Model {
 
-    //   OPERATION_TYPES = ['CREATE', 'UPDATE', 'DELETE'];
+    static get OPERATION_TYPES() {
+        return {
+            CREATED: 'C', UPDATED: 'U', DELETED: 'D'
+        };
+    }
 
     constructor(data, key) {
 

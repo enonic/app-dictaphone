@@ -28,6 +28,7 @@ dependencies {
     include "com.enonic.xp:lib-value:${xpVersion}"
     include "com.enonic.xp:lib-repo:${xpVersion}"
     include "com.enonic.xp:lib-auth:${xpVersion}"
+    include "com.enonic.xp:lib-context:${xpVersion}"
 }
 
 repositories {
