@@ -67,9 +67,7 @@ class MRRecorder {
                 this.stream = stream;
                 this.sourceNode = this.audioContext.createMediaStreamSource(stream);
 
-                this.recorder = new MediaRecorder(stream, {
-                    mimeType: 'audio/webm'
-                });
+                this.recorder = new MediaRecorder(stream);
 
                 this.recorder.addEventListener('error', evt => {
                     reject(evt);

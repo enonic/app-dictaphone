@@ -74,6 +74,8 @@ export default class MemoModel extends Model {
                         const unmodifiedServerMemos = serverMemos.filter(serverMemo => onlineMemoKeys.indexOf(serverMemo.url) < 0).// remove changed in offline mode
                         filter(serverMemo => deletedMemoKeys.indexOf(serverMemo.url) < 0);// remove deleted in offline mode
 
+                        onlineMemos.forEach(onlineMemo => onlineMemo.modified = true);
+
                         return onlineMemos.concat(unmodifiedServerMemos);
                     })
                 });
@@ -105,6 +107,23 @@ export default class MemoModel extends Model {
         return super.delete(value, dbInstance).then((event) => {
             if (!this.isOnline())
                 new LogModel({memoKey: value, type: LogModel.OPERATION_TYPES.DELETED}, this.makeURL()).put();
+            return event;
+        })
+    }
+
+    static deleteAll(dbInstance) {
+        return super.deleteAll(dbInstance).then((event) => {
+            if (!this.isOnline()) { // add server memos deletion to log
+                return MemoModel.getAll('time', MemoModel.DESCENDING).then(serverMemos => {
+                    serverMemos.forEach(serverMemo => {
+                        new LogModel({
+                            memoKey: serverMemo.url,
+                            type: LogModel.OPERATION_TYPES.DELETED
+                        }, this.makeURL()).put();
+                    });
+                    return event;
+                });
+            }
             return event;
         })
     }

@@ -33,6 +33,8 @@ export default class ListController extends Controller {
 
         this.getMemosAndPopulate();
 
+        setInterval(this.getMemosAndPopulate.bind(this), 5000);
+
         PubSubInstance().then(ps => {
             ps.sub(MemoModel.UPDATED, () => {
                 this.getMemosAndPopulate();
@@ -116,6 +118,12 @@ export default class ListController extends Controller {
                 <div class="list-view__item-details">
                   <div class="list-view__item-date">${memoTimeAgo}</div>
                   <div class="list-view__item-title">${memoTitle}</div>`
+
+            if (memo.modified) {
+                list += `<div class="list-view__item-sync-status list-view__item-sync-status--modified"></div>`;
+            } else {
+                list += `<div class="list-view__item-sync-status list-view__item-sync-status--synced"></div>`;
+            }
 
             if (memo.description !== null) {
                 list += `<div class="list-view__item-description">

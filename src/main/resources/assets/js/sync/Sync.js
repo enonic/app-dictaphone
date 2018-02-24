@@ -47,7 +47,7 @@ export default class Sync {
 
                 ToasterInstance().then(toaster => {
                     toaster.toast(asyncUpdates.length > 1 ? //beacause of local db cleaning
-                        'Connection is on. Datadase synchronized.' : 'Connection is on.');
+                        'Connection is on. Synced to database.' : 'Connection is on.');
                 });
             });
         });

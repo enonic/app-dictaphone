@@ -101,6 +101,24 @@
   overflow: hidden;
 }
 
+.list-view__item-sync-status {
+  width: 12px;
+  height: 12px;
+  padding: 0px;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  border-radius: 50%;
+
+  &.list-view__item-sync-status--modified {
+    background-color: lightgray;
+  }
+
+  &.list-view__item-sync-status--synced {
+    background-color: forestgreen;
+  }
+}
+
 .list-view__item-description {
   font-size: 14px;
   line-height: 1;
