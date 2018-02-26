@@ -1,7 +1,7 @@
 {
   "name": "Enonic Dictaphone",
   "short_name": "Dictaphone",
-  "theme_color": "#FFF",
+  "theme_color": "#3F51B5",
   "background_color": "#FFF",
   "display": "standalone",
   "start_url": ".?source=web_app_manifest",

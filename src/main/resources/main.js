@@ -15,7 +15,7 @@ var renderPage = function(pageName) {
                 appUrl: helper.getAppUrl(),
                 baseUrl: helper.getBaseUrl(),
                 precacheUrl: helper.getBaseUrl() + '/precache',
-                themeColor: '#4527A0',
+                themeColor: '#3F51B5',
                 main: helper.getBaseUrl() + '/js/main.js',
                 serviceWorker: mustacheLib.render(resolve('/pages/sw.html'), {
                     title: siteTitle,
