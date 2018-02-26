@@ -135,7 +135,7 @@ exports.deleteAll = function () {
         });
     }
 
-    repo.refresh('SEARCH');
+    repoConn.refresh('SEARCH');
 
     return {count: count};
 }
