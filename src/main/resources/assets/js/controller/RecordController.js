@@ -28,7 +28,6 @@ export default class RecordController extends Controller {
 
     constructor() {
         super();
-
         this.usesMediaRecorder = ('MediaRecorder' in window);
         this.deletePendingRecording = false;
         this.recording = false;
@@ -36,7 +35,6 @@ export default class RecordController extends Controller {
         this.analyser = null;
         this.view = document.querySelector('.js-record-view');
         this.showViewButton = document.querySelector('.js-new-recording-btn');
-
         this.volumeReadout = this.view.querySelector('.js-volume-readout');
         this.volumeReadoutCtx = this.volumeReadout.getContext('2d');
 
