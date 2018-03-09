@@ -92,6 +92,10 @@ export default class AppController extends Controller {
             });
         });
 
+        require('../voicememo-list.js');
+        require('../voicememo-details.js');
+        require('../voicememo-record.js');
+
         if (!this.supportsGUMandWebAudio()) {
             //  document.body.classList.add('superfail');
             this.newRecordingButton.classList.add('hidden');
@@ -103,12 +107,7 @@ export default class AppController extends Controller {
             return;
         }
 
-
         require('../../precache/third_party/Recorderjs/recorder.js');
-
-        require('../voicememo-record.js');
-        require('../voicememo-list.js');
-        require('../voicememo-details.js');
     }
 
     supportsGUMandWebAudio() {
