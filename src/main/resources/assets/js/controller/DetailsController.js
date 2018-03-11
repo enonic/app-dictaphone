@@ -43,6 +43,9 @@ export default class DetailsController extends Controller {
 
         this.title = this.view.querySelector('.js-title');
         this.audioPlaybackButton = this.view.querySelector('.js-playback-toggle');
+        if (!this.audioPlayIsSupported()) {
+            this.view.querySelector('.details-view__playback').style.display='none';
+        }
         this.description = this.view.querySelector('.js-description');
 
         this.audio = document.createElement('audio');
@@ -109,10 +112,12 @@ export default class DetailsController extends Controller {
         });
     }
 
+
     show(id) {
         var viewport600px = window.matchMedia('(min-width: 600px)').matches;
         var viewport960px = window.matchMedia('(min-width: 960px)').matches;
         var cameFromEdit = document.querySelector('.edit-view__panel--visible');
+        var listItems, sourceBB, revealBB, source;
 
         this.addEventListeners();
         this.setTabIndexes();
@@ -127,7 +132,7 @@ export default class DetailsController extends Controller {
             // Locate the source element
             this.memoId = id;
 
-            var source = document.querySelector('#vm-' + id);
+            source = document.querySelector('#vm-' + id);
 
             this.reveal.classList.add('details-view__box-reveal--visible');
 
@@ -141,9 +146,9 @@ export default class DetailsController extends Controller {
             }
 
             // Get all the other list items for animating out of the way.
-            var listItems = document.querySelectorAll('.list-view__item');
-            var sourceBB = source.getBoundingClientRect();
-            var revealBB = this.reveal.getBoundingClientRect();
+            listItems = document.querySelectorAll('.list-view__item');
+            sourceBB = source.getBoundingClientRect();
+            revealBB = this.reveal.getBoundingClientRect();
 
             if (viewport960px) {
                 this.panel.style.transform = 'translateY(50px)';
@@ -173,54 +178,54 @@ export default class DetailsController extends Controller {
                 requestAnimationFrame(() => {
 
                     let onRevealAnimEnd = (e) => {
-                        this.renderWaveCanvas();
-                        this.reveal.removeEventListener('transitionend', onRevealAnimEnd);
+                    this.renderWaveCanvas();
+                    this.reveal.removeEventListener('transitionend', onRevealAnimEnd);
+                }
+
+                this.reveal.addEventListener('transitionend', onRevealAnimEnd);
+
+                this.header.classList.add('header--collapsed');
+
+                this.reveal.classList.add('details-view__box-reveal--animatable');
+                this.reveal.classList.add('details-view__box-reveal--expanded');
+                this.reveal.style.transform = '';
+
+                this.panel.classList.add('details-view__panel--visible');
+                this.panel.classList.add('details-view__panel--animatable');
+                this.panel.style.transform = '';
+
+                this.underPanel.classList.add('view-underpanel--visible');
+
+                if (viewport600px)
+                    return;
+
+                var before = true;
+                var translationBefore = sourceBB.top;
+                var translationAfter = revealBB.height - sourceBB.top - sourceBB.height;
+
+                for (var i = 0; i < listItems.length; i++) {
+
+                    listItems[i].classList.add('list-view__item--animatable');
+                    if (listItems[i] === source) {
+                        before = false;
+                        continue;
                     }
 
-                    this.reveal.addEventListener('transitionend', onRevealAnimEnd);
-
-                    this.header.classList.add('header--collapsed');
-
-                    this.reveal.classList.add('details-view__box-reveal--animatable');
-                    this.reveal.classList.add('details-view__box-reveal--expanded');
-                    this.reveal.style.transform = '';
-
-                    this.panel.classList.add('details-view__panel--visible');
-                    this.panel.classList.add('details-view__panel--animatable');
-                    this.panel.style.transform = '';
-
-                    this.underPanel.classList.add('view-underpanel--visible');
-
-                    if (viewport600px)
-                        return;
-
-                    var before = true;
-                    var translationBefore = sourceBB.top;
-                    var translationAfter = revealBB.height - sourceBB.top - sourceBB.height;
-
-                    for (var i = 0; i < listItems.length; i++) {
-
-                        listItems[i].classList.add('list-view__item--animatable');
-                        if (listItems[i] === source) {
-                            before = false;
-                            continue;
-                        }
-
-                        if (before) {
-                            listItems[i].style.transform =
-                                'translateY(-' + translationBefore + 'px)';
-                        } else {
-                            listItems[i].style.transform =
-                                'translateY(' + translationAfter + 'px)';
-                        }
+                    if (before) {
+                        listItems[i].style.transform =
+                            'translateY(-' + translationBefore + 'px)';
+                    } else {
+                        listItems[i].style.transform =
+                            'translateY(' + translationAfter + 'px)';
                     }
-                });
+                }
+            });
 
-            }, 5);
+        }, 5);
         }).catch(e => {
 
-            RouterInstance().then(router => {
-                router.go('/');
+                RouterInstance().then(router => {
+               router.go('/');
             });
         })
 
@@ -561,6 +566,10 @@ export default class DetailsController extends Controller {
         this.editButton.tabIndex = -1;
         this.downloadButton.tabIndex = -1;
 
+    }
+
+    audioPlayIsSupported() {
+        return !(!!window.webkitAudioContext);
     }
 
 }

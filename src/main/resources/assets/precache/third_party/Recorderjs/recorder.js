@@ -1,4 +1,4 @@
-AudioContext = AudioContext || webkitAudioContext || mozAudioContext;
+var AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
 var Recorder = function (config) {
