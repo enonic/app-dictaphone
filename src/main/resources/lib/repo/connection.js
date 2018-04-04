@@ -1,9 +1,9 @@
 var nodeLib = require('/lib/xp/node');
 var repoLib = require('/lib/xp/repo');
-var authLib = require('/lib/xp/auth');
 var contextLib = require('/lib/xp/context');
+var helper = require('/lib/helper');
 
-var REPO_NAME = 'memo-repo';
+var REPO_NAME = helper.getAppName();
 
 var ROOT_PERMISSIONS = [
     {

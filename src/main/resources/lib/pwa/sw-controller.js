@@ -6,6 +6,8 @@ var view = resolve('sw-template.js');
 exports.get = function() {
     var appUrl = helper.getAppUrl();
     var baseUrl = helper.getBaseUrl();
+    var appName = helper.getAppName();
+
     var postfix = '?source=web_app_manifest';
     
     var preCacheRoot;
@@ -24,6 +26,7 @@ exports.get = function() {
         contentType: 'application/javascript',
         body: mustache.render(view, {
             appUrl: appUrl,
+            appName: appName,
             baseUrl: baseUrl,
             preCacheRoot: preCacheRoot,
             appVersion: app.version
