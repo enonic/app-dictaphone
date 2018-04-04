@@ -1,5 +1,5 @@
 var portalLib = require('/lib/xp/portal');
-var valueLib = require('/lib/xp/value');
+var memoModel = require('/lib/repo/model/memoModel');
 
 var query = require('query');
 
@@ -22,7 +22,7 @@ exports.get = function (req) {
     var memoNode = query.querySingleHit(key);
 
     return {
-        body: memoNode ? memoNode.value : null,
+        body: memoNode ? memoModel.toJson(memoNode) : null,
         contentType: 'application/json'
     };
 };
@@ -37,7 +37,7 @@ exports.getAll = function (req) {
 
     return {
         body: JSON.stringify(result.map(function (node) {
-            return {key: node.key, value: node.value}
+            return {key: node.key, value: memoModel.toJson(node)}
         })),
         contentType: 'application/json'
     };
@@ -45,7 +45,7 @@ exports.getAll = function (req) {
 
 exports.put = function () {
 
-    var value = portalLib.getMultipartText('value');
+    var value = JSON.parse(portalLib.getMultipartText('value'));
     var key = portalLib.getMultipartText('key');
     var storeName = portalLib.getMultipartText('storeName');
 

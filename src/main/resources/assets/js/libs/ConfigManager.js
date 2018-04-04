@@ -31,6 +31,7 @@ class ConfigManager {
 
     constructor() {
         this.config = Config;
+        this.config.name = appName;
     }
 
     set config(c) {

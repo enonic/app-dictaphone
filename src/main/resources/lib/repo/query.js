@@ -78,7 +78,13 @@ exports.put = function (params) {
             key: memoNode._id,
             editor: function (node) {
                 node.key = params.key;
-                node.value = params.value;
+                node.title = params.value.title;
+                node.description = params.value.description;
+                node.url = params.value.url;
+                node.volumeData = params.value.volumeData;
+                node.time = params.value.time;
+                node.modifiedTime = params.value.modifiedTime;
+                node.transcript = params.value.transcript;
                 node.storeName = params.storeName;
                 return node;
             }
@@ -88,7 +94,13 @@ exports.put = function (params) {
             _parentPath: getCurrentFolderPath(),
             _permissions: connection.ROOT_PERMISSIONS,
             key: params.key,
-            value: params.value,
+            title: params.value.title,
+            description: params.value.description,
+            url: params.value.url,
+            volumeData: params.value.volumeData,
+            time: params.value.time,
+            modifiedTime: params.value.modifiedTime,
+            transcript: params.value.transcript,
             storeName: params.storeName,
             audio: valueLib.binary('audio', params.stream)
         });

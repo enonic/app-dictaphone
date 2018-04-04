@@ -1,7 +1,11 @@
 var portalLib = require('/lib/xp/portal');
 
 exports.getAppUrl = function getAppUrl() {
-    return portalLib.url({path:'/app/' + app.name});
+    return portalLib.url({path: '/app/' + exports.getAppName()});
+};
+
+exports.getAppName = function getAppName() {
+    return app.name;
 };
 
 exports.getBaseUrl = function() {

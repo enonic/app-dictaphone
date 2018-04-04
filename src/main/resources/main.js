@@ -13,6 +13,7 @@ var renderPage = function(pageName) {
                 title: siteTitle,
                 version: app.version,
                 appUrl: helper.getAppUrl(),
+                appName: helper.getAppName(),
                 baseUrl: helper.getBaseUrl(),
                 precacheUrl: helper.getBaseUrl() + '/precache',
                 themeColor: '#3F51B5',

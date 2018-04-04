@@ -172,7 +172,7 @@ class OnlineDatabase {
                     resolve(resultArray.map(json => {
                         return {
                             key: json.key,
-                            value: JSON.parse(json.value)
+                            value: json.value
                         }
                     }));
                 } else {

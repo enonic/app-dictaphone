@@ -16,7 +16,6 @@
  */
 
 const Config = {
-    name: 'voicememo',
     version: 1,
     stores: {
         'MemoModel': {
