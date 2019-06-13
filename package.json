@@ -1,10 +1,10 @@
 {
   "name": "starter-pwa",
   "version": "1.1.0",
-  "description": "PWA Starter Kit for Enonic XP Platform",
+  "description": "Dictaphone PWA",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/enonic/starter-workbox.git"
+    "url": "git+https://github.com/enonic/app-dictaphone.git"
   },
   "scripts": {
     "build": "gradle build",
@@ -20,26 +20,22 @@
   "author": "Alan Semenov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/enonic/starter-pwa/issues"
+    "url": "https://github.com/enonic/app-dictaphone/issues"
   },
-  "homepage": "https://github.com/enonic/starter-pwa#readme",
+  "homepage": "https://github.com/enonic/app-dictaphone#readme",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "css-loader": "^0.26.1",
-    "extract-text-webpack-plugin": "^3.0.0",
-    "less": "^2.7.2",
-    "less-loader": "^2.2.3",
-    "node-sass": "^4.7.2",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.13.1",
-    "webpack": "^3.10.0",
-    "workbox-webpack-plugin": "^2.1.0"
-  },
-  "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "file-loader": "^1.1.6"
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^3.0.0",
+    "file-loader": "^1.1.6",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^0.4.5",
+    "node-sass": "^4.12.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "workbox-webpack-plugin": "^4.2.0"
   }
 }

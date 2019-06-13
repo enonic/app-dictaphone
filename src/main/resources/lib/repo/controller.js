@@ -1,6 +1,4 @@
 var portalLib = require('/lib/xp/portal');
-var valueLib = require('/lib/xp/value');
-
 var query = require('query');
 
 exports.getAudio = function (req) {
