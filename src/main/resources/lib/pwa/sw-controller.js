@@ -1,4 +1,4 @@
-var mustache = require('/lib/xp/mustache');
+var mustache = require('/lib/mustache');
 var helper = require('/lib/helper');
 
 var view = resolve('sw-template.js');

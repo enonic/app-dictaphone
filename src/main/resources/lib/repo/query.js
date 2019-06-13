@@ -1,4 +1,3 @@
-var authLib = require('/lib/xp/auth');
 var valueLib = require('/lib/xp/value');
 
 var connection = require('connection');

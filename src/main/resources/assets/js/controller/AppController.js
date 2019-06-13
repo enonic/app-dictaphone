@@ -74,11 +74,24 @@ export default class AppController extends Controller {
         this.sideNavContent.addEventListener('click', (e) => {
             e.stopPropagation();
         });
-        this.sideNavContent.addEventListener('touchstart', onSideNavTouchStart);
-        this.sideNavContent.addEventListener('touchmove', onSideNavTouchMove);
-        this.sideNavContent.addEventListener('touchend', onSideNavTouchEnd);
 
+        try {
+            this.sideNavContent.addEventListener('touchstart',onSideNavTouchStart, {passive: true});
+        } catch {
+            this.sideNavContent.addEventListener('touchstart',onSideNavTouchStart);
+        }
 
+        try {
+            this.sideNavContent.addEventListener('touchmove',onSideNavTouchMove, {passive: true});
+        } catch {
+            this.sideNavContent.addEventListener('touchmove',onSideNavTouchMove);
+        }
+
+        try {
+            this.sideNavContent.addEventListener('touchend',onSideNavTouchEnd, {passive: true});
+        } catch {
+            this.sideNavContent.addEventListener('touchend',onSideNavTouchEnd);
+        }
         // Wait for the first frame because sometimes
         // window.onload fires too quickly.
         requestAnimationFrame(() => {

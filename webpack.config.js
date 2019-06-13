@@ -1,5 +1,5 @@
 const path = require('path');
-const extractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const workboxPlugin = require('workbox-webpack-plugin');
 
 const paths = {
@@ -30,42 +30,44 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
-                }
+                exclude: /node_modules/,
+                loader: 'babel-loader'
             },
             {
                 test: /\.less$/,
-                loader: extractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: "css-loader!less-loader",
-                    publicPath: '../'
-                })
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'less-loader'
+                ]
             },
             {
                 test: /\.svg$/,
-                loader: 'file-loader?name=precache/icons/[name].[ext]'
+                loader: 'file-loader?name=icons/[name].[ext]'
             },
             {
                 test: /\.woff$/,
-                loader: 'file-loader?name=precache/fonts/[name].[ext]'
+                loader: 'file-loader?name=fonts/[name].[ext]'
             },
             {
                 test: /\.(png|jpg|gif)$/,
-                loader: 'file-loader?name=precache/icons/[name].[ext]'
+                loader: 'file-loader?name=icons/[name].[ext]'
             }
         ]
     },
     plugins: [
-        new extractTextPlugin('precache/bundle.css'),
-        new workboxPlugin({
+        new MiniCssExtractPlugin({
+            filename: 'precache/bundle.css'
+        }),
+        new workboxPlugin.InjectManifest({
             globDirectory: buildAssetsPath,
             globPatterns: ['precache/**\/*'],
             globIgnores: [],
             swSrc: path.join(assetsPath, 'js/sw-dev.js'),
             swDest: path.join(buildPwaLibPath, 'sw-template.js')
         })
-    ]
+    ],
+
+    mode: 'production'
 
 };

@@ -1,25 +1,35 @@
-importScripts('https://unpkg.com/workbox-sw@2.1.2/build/importScripts/workbox-sw.prod.v2.1.2.js');
-
 const swVersion = '{{appVersion}}';
-const workboxSW = new self.WorkboxSW({
-    skipWaiting: true,
-    clientsClaim: true
+
+workbox.core.setCacheNameDetails({
+    prefix: 'enonic-dictaphone',
+    suffix: '{{appVersion}}',
+    precache: 'precache',
+    runtime: 'runtime'
 });
 
-workboxSW.precache([]);
+workbox.core.clientsClaim();
+workbox.core.skipWaiting();
+
+// This is a placeholder for manifest dynamically injected from webpack.config.js
+workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
 
 // Here we precache urls that are generated dynamically in the main.js controller
-workboxSW.precache([
+workbox.precaching.precacheAndRoute([
     '{{{preCacheRoot}}}',
-    '{{baseUrl}}/manifest.json',
-    '{{baseUrl}}/browserconfig.xml',
-    'https://fonts.googleapis.com/icon?family=Material+Icons'
-]);
-workboxSW.router.setDefaultHandler({
-    handler: workboxSW.strategies.networkOnly()
-});
+{
+    "revision": "{{appVersion}}",
+    "url": "{{baseUrl}}/manifest.json"
+}, {
+    "revision": "{{appVersion}}",
+    "url": "{{baseUrl}}/browserconfig.xml"
+}, {
+    "revision": "{{appVersion}}",
+    "url": "https://fonts.googleapis.com/icon?family=Material+Icons"
+}]);
 
-workboxSW.router.registerRoute('/app/com.enonic.app.dictaphone/getAll', workboxSW.strategies.networkFirst({
+workbox.routing.setDefaultHandler(new workbox.strategies.NetworkOnly());
+
+workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/getAll', new workbox.strategies.NetworkFirst({
     "cacheName": "all-memo-cache",
     "cacheExpiration": {
         "maxEnteries": 100,
@@ -27,7 +37,7 @@ workboxSW.router.registerRoute('/app/com.enonic.app.dictaphone/getAll', workboxS
     }
 }));
 
-workboxSW.router.registerRoute('/app/com.enonic.app.dictaphone/get', workboxSW.strategies.networkFirst({
+workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/get', new workbox.strategies.NetworkFirst({
     "cacheName": "memo-cache",
     "cacheExpiration": {
         "maxEnteries": 100,
@@ -35,7 +45,7 @@ workboxSW.router.registerRoute('/app/com.enonic.app.dictaphone/get', workboxSW.s
     }
 }));
 
-workboxSW.router.registerRoute('/app/com.enonic.app.dictaphone/getAudio', workboxSW.strategies.networkFirst({
+workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/getAudio', new workbox.strategies.NetworkFirst({
     "cacheName": "audio-cache",
     "cacheExpiration": {
         "maxEnteries": 100,
@@ -43,4 +53,4 @@ workboxSW.router.registerRoute('/app/com.enonic.app.dictaphone/getAudio', workbo
     }
 }));
 
-workboxSW.router.registerRoute('/app/com.enonic.app.dictaphone/put', workboxSW.strategies.networkOnly());
+workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/put', new workbox.strategies.NetworkFirst());
