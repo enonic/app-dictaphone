@@ -1,6 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const workboxPlugin = require('workbox-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 const paths = {
     assets: 'src/main/resources/assets/',
@@ -43,15 +43,15 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
-                loader: 'file-loader?name=icons/[name].[ext]'
+                use: 'file-loader?name=icons/[name].[ext]'
             },
             {
                 test: /\.woff$/,
-                loader: 'file-loader?name=fonts/[name].[ext]'
+                use: 'file-loader?name=fonts/[name].[ext]'
             },
             {
                 test: /\.(png|jpg|gif)$/,
-                loader: 'file-loader?name=icons/[name].[ext]'
+                use: 'file-loader?name=icons/[name].[ext]'
             }
         ]
     },
@@ -59,10 +59,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'precache/bundle.css'
         }),
-        new workboxPlugin.InjectManifest({
-            globDirectory: buildAssetsPath,
-            globPatterns: ['precache/**\/*'],
-            globIgnores: [],
+        new InjectManifest({
             swSrc: path.join(assetsPath, 'js/sw-dev.js'),
             swDest: path.join(buildPwaLibPath, 'sw-template.js')
         })

@@ -1,20 +1,23 @@
-const swVersion = '{{appVersion}}';
+import {setCacheNameDetails, clientsClaim, skipWaiting} from 'workbox-core';
+import {precacheAndRoute} from 'workbox-precaching';
+import {registerRoute, setDefaultHandler} from 'workbox-routing';
+import {NetworkOnly, NetworkFirst} from 'workbox-strategies';
 
-workbox.core.setCacheNameDetails({
+setCacheNameDetails({
     prefix: 'enonic-dictaphone',
     suffix: '{{appVersion}}',
     precache: 'precache',
     runtime: 'runtime'
 });
 
-workbox.core.clientsClaim();
-workbox.core.skipWaiting();
+clientsClaim();
+skipWaiting();
 
 // This is a placeholder for manifest dynamically injected from webpack.config.js
-workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
+precacheAndRoute(self.__WB_MANIFEST);
 
 // Here we precache urls that are generated dynamically in the main.js controller
-workbox.precaching.precacheAndRoute([
+precacheAndRoute([
     '{{{preCacheRoot}}}',
 {
     "revision": "{{appVersion}}",
@@ -27,9 +30,9 @@ workbox.precaching.precacheAndRoute([
     "url": "https://fonts.googleapis.com/icon?family=Material+Icons"
 }]);
 
-workbox.routing.setDefaultHandler(new workbox.strategies.NetworkOnly());
+setDefaultHandler(new NetworkOnly());
 
-workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/getAll', new workbox.strategies.NetworkFirst({
+registerRoute('/webapp/com.enonic.app.dictaphone/getAll', new NetworkFirst({
     "cacheName": "all-memo-cache",
     "cacheExpiration": {
         "maxEnteries": 100,
@@ -37,7 +40,7 @@ workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/getAll', new wo
     }
 }));
 
-workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/get', new workbox.strategies.NetworkFirst({
+registerRoute('/webapp/com.enonic.app.dictaphone/get', new NetworkFirst({
     "cacheName": "memo-cache",
     "cacheExpiration": {
         "maxEnteries": 100,
@@ -45,7 +48,7 @@ workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/get', new workb
     }
 }));
 
-workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/getAudio', new workbox.strategies.NetworkFirst({
+registerRoute('/webapp/com.enonic.app.dictaphone/getAudio', new NetworkFirst({
     "cacheName": "audio-cache",
     "cacheExpiration": {
         "maxEnteries": 100,
@@ -53,4 +56,4 @@ workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/getAudio', new 
     }
 }));
 
-workbox.routing.registerRoute('/webapp/com.enonic.app.dictaphone/put', new workbox.strategies.NetworkFirst());
+registerRoute('/webapp/com.enonic.app.dictaphone/put', new NetworkFirst());
