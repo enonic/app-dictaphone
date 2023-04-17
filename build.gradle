@@ -26,7 +26,7 @@ dependencies {
     include "com.enonic.xp:lib-repo:${xpVersion}"
     include "com.enonic.xp:lib-context:${xpVersion}"
     include "com.enonic.lib:lib-mustache:2.1.1"
-    include "com.enonic.lib:lib-router:2.0.0"
+    include "com.enonic.lib:lib-router:3.0.1"
 }
 
 repositories {
