@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/enonic/app-dictaphone#readme",
   "devDependencies": {
-    "@babel/core": "^7.22.1",
+    "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.4",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.8.1",
