@@ -1,6 +1,6 @@
 plugins {
     id "com.github.node-gradle.node" version '7.0.1'
-    id 'com.enonic.defaults' version '2.1.2'
+    id 'com.enonic.defaults' version '2.1.5'
     id 'com.enonic.xp.app' version '3.4.0'
     id 'maven-publish'
 }
@@ -15,11 +15,11 @@ app {
 
 node {
     download = true
-    version = '12.13.1'
+    version = '20.9.0'
 }
 
 dependencies {
-    compile "com.enonic.xp:portal-api:${xpVersion}"
+    implementation "com.enonic.xp:portal-api:${xpVersion}"
     include "com.enonic.xp:lib-portal:${xpVersion}"
     include "com.enonic.xp:lib-node:${xpVersion}"
     include "com.enonic.xp:lib-value:${xpVersion}"
