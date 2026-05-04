@@ -1,0 +1,7 @@
+[versions]
+mustache = "2.1.1"
+router = "3.2.0"
+
+[libraries]
+lib-mustache = { module = "com.enonic.lib:lib-mustache", version.ref = "mustache" }
+lib-router = { module = "com.enonic.lib:lib-router", version.ref = "router" }

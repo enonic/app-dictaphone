@@ -1,16 +1,8 @@
 plugins {
     id "com.github.node-gradle.node" version '7.1.0'
     id 'com.enonic.defaults' version '2.1.6'
-    id 'com.enonic.xp.app' version '3.6.2'
+    id 'com.enonic.xp.app'
     id 'maven-publish'
-}
-
-app {
-    name = project.appName
-    displayName = 'Enonic Dictaphone'
-    vendorName = 'Enonic AS'
-    vendorUrl = 'https://enonic.com'
-    systemVersion = "${xpVersion}"
 }
 
 node {
@@ -19,14 +11,14 @@ node {
 }
 
 dependencies {
-    implementation "com.enonic.xp:portal-api:${xpVersion}"
-    include "com.enonic.xp:lib-portal:${xpVersion}"
-    include "com.enonic.xp:lib-node:${xpVersion}"
-    include "com.enonic.xp:lib-value:${xpVersion}"
-    include "com.enonic.xp:lib-repo:${xpVersion}"
-    include "com.enonic.xp:lib-context:${xpVersion}"
-    include "com.enonic.lib:lib-mustache:2.1.1"
-    include "com.enonic.lib:lib-router:3.2.0"
+    implementation xplibs.api.portal
+    include xplibs.portal
+    include xplibs.node
+    include xplibs.value
+    include xplibs.repo
+    include xplibs.context
+    include libs.lib.mustache
+    include libs.lib.router
 }
 
 repositories {
