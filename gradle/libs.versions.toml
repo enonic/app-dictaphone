@@ -1,6 +1,6 @@
 [versions]
-mustache = "2.1.1"
-router = "3.2.0"
+mustache = "3.0.0-SNAPSHOT"
+router = "4.0.0-SNAPSHOT"
 
 [libraries]
 lib-mustache = { module = "com.enonic.lib:lib-mustache", version.ref = "mustache" }
